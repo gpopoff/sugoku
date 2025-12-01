@@ -78,7 +78,8 @@ src/
 - **Angular 17** - Framework
 - **TypeScript** - Type safety
 - **RxJS** - Reactive programming and state management
-- **CSS3** - Styling with modern features
+- **Tailwind** - styling framework
+- **CSS3** - additional styling
 
 ## Features Implementation
 
