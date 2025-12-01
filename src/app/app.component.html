@@ -1,0 +1,39 @@
+<div class="min-h-screen max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+  <div class="text-center text-white mb-8 sm:mb-12">
+    <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-3 drop-shadow-lg">
+      🧠 Sugoku
+    </h1>
+    <p class="text-base sm:text-lg md:text-xl text-white/90 font-medium">
+      Challenge yourself with Sudoku puzzles!
+    </p>
+  </div>
+
+  <div class="flex flex-col lg:flex-row gap-6 lg:gap-8 justify-center items-center">
+    <div class="w-full lg:w-auto lg:min-w-[320px]">
+      <app-game-controls
+        [gameState]="gameState"
+        (startGame)="onStartGame($event)"
+        (validateBoard)="onValidateBoard()"
+        (solveBoard)="onSolveBoard()"
+        (resetGame)="onResetGame()"
+      ></app-game-controls>
+    </div>
+
+    <div class="flex-1 flex justify-center items-center min-h-[400px] sm:min-h-[500px]">
+      <app-sudoku-board
+        *ngIf="gameState.board.length > 0"
+        [board]="gameState.board"
+        [originalBoard]="gameState.originalBoard"
+        [validationStatus]="gameState.validationStatus"
+        (cellChange)="onCellChange($event)"
+      ></app-sudoku-board>
+      
+      <div class="bg-white rounded-2xl p-8 sm:p-12 text-center shadow-xl border border-gray-100 max-w-md" *ngIf="gameState.board.length === 0 && !gameState.isLoading">
+        <div class="text-5xl mb-4">👋</div>
+        <p class="text-xl sm:text-2xl font-semibold text-gray-800 mb-2">Welcome to Sugoku!</p>
+        <p class="text-base sm:text-lg text-gray-600">Select a difficulty and click "Start Game" to begin.</p>
+      </div>
+    </div>
+  </div>
+</div>
+

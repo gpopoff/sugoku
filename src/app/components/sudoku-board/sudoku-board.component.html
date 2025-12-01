@@ -1,0 +1,59 @@
+<div class="flex justify-center items-center px-4 sm:px-6 relative">
+  <div class="border-4 border-gray-900 bg-white rounded-2xl p-1.5 sm:p-2 shadow-2xl">
+    <div 
+      *ngFor="let row of cells; let rowIndex = index" 
+      class="flex"
+    >
+      <div 
+        *ngFor="let cell of row; let colIndex = index"
+        [class]="getCellClass(cell, rowIndex, colIndex)"
+        (click)="onCellClick($event, rowIndex, colIndex)"
+      >
+        <input
+          type="number"
+          min="0"
+          max="9"
+          [value]="cell.value === 0 ? '' : cell.value"
+          [readonly]="cell.isPrefilled"
+          (input)="onCellInput($event, rowIndex, colIndex)"
+          (focus)="onCellFocus($event, rowIndex, colIndex)"
+          (keydown)="onCellKeyDown($event, rowIndex, colIndex)"
+          class="w-full h-full border-0 text-center text-xl sm:text-2xl md:text-3xl font-bold bg-transparent text-gray-900 outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none focus:bg-indigo-50 focus:text-indigo-700 transition-all duration-200"
+          [class.bg-gray-50]="cell.isPrefilled"
+          [class.text-gray-500]="cell.isPrefilled"
+          [class.cursor-not-allowed]="cell.isPrefilled"
+        />
+      </div>
+    </div>
+  </div>
+
+  <div 
+    *ngIf="showNumberSelector" 
+    class="absolute bg-white rounded-2xl shadow-2xl p-4 z-[1000] w-[240px] border border-gray-100 number-selector-popup"
+    [style.top.px]="selectorPosition.top"
+    [style.left.px]="selectorPosition.left"
+    (click)="$event.stopPropagation()"
+    #numberSelector
+  >
+    <div class="grid grid-cols-3 gap-2.5 mb-3">
+      <button
+        *ngFor="let num of numbers"
+        type="button"
+        class="w-14 h-14 sm:w-16 sm:h-16 border-2 border-indigo-400 bg-white text-indigo-600 text-xl sm:text-2xl font-bold rounded-xl transition-all duration-200 flex items-center justify-center hover:bg-indigo-500 hover:text-white hover:border-indigo-500 hover:scale-110 active:scale-95 shadow-sm hover:shadow-md"
+        (click)="onNumberSelect($event, num)"
+        (touchstart)="onNumberSelect($event, num)"
+      >
+        {{ num }}
+      </button>
+    </div>
+    <button
+      type="button"
+      class="w-full py-3 bg-red-500 text-white text-sm font-semibold rounded-xl transition-all duration-200 hover:bg-red-600 hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0"
+      (click)="onClearCell($event)"
+      (touchstart)="onClearCell($event)"
+    >
+      Clear
+    </button>
+  </div>
+</div>
+
